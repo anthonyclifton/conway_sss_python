@@ -1,3 +1,6 @@
 class Grid(object):
     def __init__(self):
-        pass
+        self.cells = []
+
+    def birth_cell(self, coordinates):
+        self.cells.append(coordinates)
