@@ -12,7 +12,7 @@ class TestGrid(unittest.TestCase):
         self.grid.birth_cell(expected_cell)
         assert expected_cell in self.grid.cells
 
-    def test__grid__should_not_birth_two_cells_at_the_same_location(self):
+    def test__grid__should_not_allow_duplicate_cells(self):
         cell_to_birth = (0, 0)
         self.grid.birth_cell(cell_to_birth)
         self.grid.birth_cell(cell_to_birth)
