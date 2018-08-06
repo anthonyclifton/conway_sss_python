@@ -1,3 +1,4 @@
+import curses
 import unittest
 
 from mock import MagicMock, call
@@ -8,6 +9,7 @@ from screen_service import ScreenService
 class TestScreenService(unittest.TestCase):
     def setUp(self):
         self.mock_screen = MagicMock()
+        self.mock_screen.getch.return_value = 10
 
         self.mock_stdscn = MagicMock()
         self.mock_stdscn.subwin.return_value = self.mock_screen
@@ -38,3 +40,7 @@ class TestScreenService(unittest.TestCase):
         self.mock_curses.echo.assert_called_once()
         self.mock_curses.nocbreak.assert_called_once()
         self.mock_curses.endwin.assert_called_once()
+
+    def test__check_keyboard__should_return_zero_when_enter_key_pressed(self):
+        key_pressed = self.screen_service.check_keyboard()
+        self.assertEquals(key_pressed, 0)
