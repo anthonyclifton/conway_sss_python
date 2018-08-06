@@ -1,8 +1,5 @@
-import curses
 import unittest
-
 from mock import MagicMock, call
-
 from screen_service import ScreenService
 
 

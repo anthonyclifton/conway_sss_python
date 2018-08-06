@@ -1,6 +1,3 @@
-import curses
-
-
 class ScreenService(object):
     def __init__(self, curses):
         self.curses = curses
