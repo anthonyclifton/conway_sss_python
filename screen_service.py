@@ -9,6 +9,7 @@ class ScreenService(object):
         curses.cbreak()
         self.stdscr.keypad(1)
         self.screen = self.stdscr.subwin(23, 79, 0, 0)
+        self.screen.nodelay(1)
 
     def check_keyboard(self):
         c = self.screen.getch()

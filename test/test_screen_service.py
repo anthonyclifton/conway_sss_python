@@ -25,6 +25,7 @@ class TestScreenService(unittest.TestCase):
         self.mock_curses.cbreak.assert_called_once()
         self.mock_stdscn.subwin.assert_called_once()
         self.mock_stdscn.keypad.assert_called_once_with(1)
+        self.mock_screen.nodelay.assert_called_once_with(1)
 
     def test__draw_border__should_draw_border(self):
         self.screen_service.draw_border()
