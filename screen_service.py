@@ -28,6 +28,7 @@ class ScreenService(object):
             y, x = cell
             if self.is_on_screen(x, y):
                 self.screen.addch(y, x, 'O')
+        self.screen.refresh()
 
     def cleanup(self):
         self.stdscr.keypad(0)

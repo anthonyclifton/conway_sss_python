@@ -50,6 +50,7 @@ class TestScreenService(unittest.TestCase):
         calls = [call(1, 1, 'O'), call(2, 2, 'O'), call(3, 3, 'O')]
 
         self.mock_screen.addch.assert_has_calls(calls)
+        self.mock_screen.refresh.assert_called_once()
 
     def test__draw__should_not_draw_tuple_that_is_off_the_screen(self):
         self.screen_service.height = 3
