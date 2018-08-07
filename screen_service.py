@@ -30,6 +30,13 @@ class ScreenService(object):
                 self.screen.addch(y, x, 'O')
         self.screen.refresh()
 
+    def clear(self, cells):
+        for cell in cells:
+            y, x = cell
+            if self.is_on_screen(x, y):
+                self.screen.addch(y, x, '')
+        self.screen.refresh()
+
     def cleanup(self):
         self.stdscr.keypad(0)
         self.curses.echo()
