@@ -5,7 +5,8 @@ class ScreenService(object):
         curses.noecho()
         curses.cbreak()
         self.stdscr.keypad(1)
-        self.screen = self.stdscr.subwin(23, 79, 0, 0)
+        self.height, self.width = self.stdscr.getmaxyx()
+        self.screen = self.stdscr.subwin(self.height - 1, self.width - 1, 0, 0)
         self.screen.nodelay(1)
 
     def check_keyboard(self):

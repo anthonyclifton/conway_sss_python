@@ -1,6 +1,10 @@
 import unittest
 from mock import MagicMock, call
+
 from screen_service import ScreenService
+
+TEST_SCREEN_HEIGHT = 1
+TEST_SCREEN_WIDTH = 2
 
 
 class TestScreenService(unittest.TestCase):
@@ -10,6 +14,7 @@ class TestScreenService(unittest.TestCase):
 
         self.mock_stdscn = MagicMock()
         self.mock_stdscn.subwin.return_value = self.mock_screen
+        self.mock_stdscn.getmaxyx.return_value = (TEST_SCREEN_HEIGHT, TEST_SCREEN_WIDTH)
 
         self.mock_curses = MagicMock()
         self.mock_curses.initscr.return_value = self.mock_stdscn
@@ -20,9 +25,13 @@ class TestScreenService(unittest.TestCase):
         self.mock_curses.initscr.assert_called_once()
         self.mock_curses.noecho.assert_called_once()
         self.mock_curses.cbreak.assert_called_once()
-        self.mock_stdscn.subwin.assert_called_once()
+        self.mock_stdscn.subwin.assert_called_once_with(
+            TEST_SCREEN_HEIGHT - 1, TEST_SCREEN_WIDTH - 1, 0, 0)
         self.mock_stdscn.keypad.assert_called_once_with(1)
+        self.mock_stdscn.getmaxyx.assert_called_once()
         self.mock_screen.nodelay.assert_called_once_with(1)
+        self.assertEquals(self.screen_service.height, 1)
+        self.assertEquals(self.screen_service.width, 2)
 
     def test__draw_border__should_draw_border(self):
         self.screen_service.draw_border()
