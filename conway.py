@@ -12,7 +12,7 @@ if __name__ == '__main__':
     running = True
     while running:
         sleep(0.5)
-        if screen_service.check_keyboard() == 0:
+        if screen_service.check_inputs() == 0:
             screen_service.cleanup()
             running = False
 

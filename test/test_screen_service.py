@@ -92,5 +92,16 @@ class TestScreenService(unittest.TestCase):
         self.mock_curses.endwin.assert_called_once()
 
     def test__check_keyboard__should_return_zero_when_enter_key_pressed(self):
-        key_pressed = self.screen_service.check_keyboard()
+        key_pressed = self.screen_service.check_inputs()
         self.assertEquals(key_pressed, 0)
+
+    def test__handle_terminal_resize__should_update_screen(self):
+        self.screen_service.handle_terminal_resize()
+
+        self.assertEquals(self.screen_service.height, 1)
+        self.assertEquals(self.screen_service.width, 1)
+        self.assertEquals(self.mock_stdscn.subwin.call_count, 2)
+
+        self.assertEquals(self.mock_screen.nodelay.call_count, 2)
+        self.assertEquals(self.mock_screen.erase.call_count, 1)
+        self.assertEquals(self.mock_screen.refresh.call_count, 2)

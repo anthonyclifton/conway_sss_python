@@ -14,14 +14,25 @@ class ScreenService(object):
             0)
         self.screen.nodelay(1)
 
-    def check_keyboard(self):
+    def check_inputs(self):
         c = self.screen.getch()
+        if c == self.curses.KEY_RESIZE:
+            self.handle_terminal_resize()
         if c == 10:
             return 0
         return 1
 
     def handle_terminal_resize(self):
-        pass
+        self.height, self.width = self.stdscr.getmaxyx()
+        self.screen = self.stdscr.subwin(
+            self.height - 1,
+            self.width - 1,
+            0,
+            0)
+        self.screen.nodelay(1)
+        self.screen.erase()
+        self.screen.refresh()
+        self.draw_border()
 
     def draw_border(self):
         self.screen.box()
@@ -42,6 +53,7 @@ class ScreenService(object):
         self.screen.refresh()
 
     def cleanup(self):
+        # todo clear the screen
         self.stdscr.keypad(0)
         self.curses.echo()
         self.curses.nocbreak()
