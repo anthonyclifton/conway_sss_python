@@ -25,6 +25,7 @@ class TestScreenService(unittest.TestCase):
         self.mock_curses.initscr.assert_called_once()
         self.mock_curses.noecho.assert_called_once()
         self.mock_curses.cbreak.assert_called_once()
+        self.mock_curses.curs_set.assert_called_once_with(0)
         self.mock_stdscn.subwin.assert_called_once_with(
             TEST_SCREEN_HEIGHT - 1, TEST_SCREEN_WIDTH - 1, 0, 0)
         self.mock_stdscn.keypad.assert_called_once_with(1)
@@ -60,7 +61,7 @@ class TestScreenService(unittest.TestCase):
 
         self.screen_service.clear(cells)
 
-        calls = [call(1, 1, ''), call(2, 2, ''), call(3, 3, '')]
+        calls = [call(1, 1, ' '), call(2, 2, ' '), call(3, 3, ' ')]
 
         self.mock_screen.addch.assert_has_calls(calls)
         self.mock_screen.refresh.assert_called_once()

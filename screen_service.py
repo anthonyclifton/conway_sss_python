@@ -4,6 +4,7 @@ class ScreenService(object):
         self.stdscr = curses.initscr()
         curses.noecho()
         curses.cbreak()
+        curses.curs_set(0)
         self.stdscr.keypad(1)
         self.height, self.width = self.stdscr.getmaxyx()
         self.screen = self.stdscr.subwin(
@@ -18,6 +19,9 @@ class ScreenService(object):
         if c == 10:
             return 0
         return 1
+
+    def handle_terminal_resize(self):
+        pass
 
     def draw_border(self):
         self.screen.box()
@@ -34,7 +38,7 @@ class ScreenService(object):
         for cell in cells:
             y, x = cell
             if self.is_on_screen(x, y):
-                self.screen.addch(y, x, '')
+                self.screen.addch(y, x, ' ')
         self.screen.refresh()
 
     def cleanup(self):
