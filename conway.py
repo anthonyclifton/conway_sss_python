@@ -11,7 +11,7 @@ if __name__ == '__main__':
     screen_service.draw_border()
     running = True
     while running:
-        sleep(0.1)
+        sleep(0.5)
         if screen_service.check_keyboard() == 0:
             screen_service.cleanup()
             running = False
