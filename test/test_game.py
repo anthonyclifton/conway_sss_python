@@ -1,5 +1,5 @@
 import unittest
-from mock import MagicMock
+from mock import MagicMock, call
 from game import Game
 from grid import Grid
 
@@ -26,4 +26,11 @@ class TestGame(unittest.TestCase):
         self.game.update()
         assert first_cell not in self.game.grid.cells
         self.assertEquals(len(self.game.grid.cells), 1)
+
+    def test__display__should_draw_cells_on_screen(self):
+        expected_cells = [(0, 0), (1, 1), (2, 2)]
+        self.game.grid.cells.update(set(expected_cells))
+        self.game.display()
+        calls = [call(expected_cells)]
+        self.mock_screen_service.draw.assert_has_calls(calls)
 

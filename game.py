@@ -13,3 +13,6 @@ class Game(object):
             self.grid.kill_cell(list(self.grid.cells)[0])
         random_cell = (randint(0, 9), randint(0, 9))
         self.grid.birth_cell(random_cell)
+
+    def display(self):
+        self.screen_service.draw(list(self.grid.cells))
