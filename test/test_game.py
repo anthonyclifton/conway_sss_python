@@ -34,3 +34,10 @@ class TestGame(unittest.TestCase):
         calls = [call(expected_cells)]
         self.mock_screen_service.draw.assert_has_calls(calls)
 
+    def test__update__should_clear_dead_cell_from_screen(self):
+        self.game.update()
+        first_cell = list(self.game.grid.cells)[0]
+        self.game.update()
+        self.game.display()
+        calls = [call([first_cell])]
+        self.mock_screen_service.clear.assert_has_calls(calls)
