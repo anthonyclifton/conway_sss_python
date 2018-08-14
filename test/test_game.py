@@ -94,6 +94,9 @@ class FakeScreenService(object):
     def get_dimensions():
         return 10, 10
 
+    def draw_ui(self):
+        pass
+
     def draw_status(self, generation_count, generations_per_second, living_cells):
         self.draw_status_calls = self.draw_status_calls + 1
 

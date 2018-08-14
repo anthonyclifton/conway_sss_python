@@ -17,6 +17,7 @@ class Game(object):
         self.screen_service.draw_ui()
 
     def start(self):
+        self.setup()
         self.running = True
         while self.running:
             time.sleep(0.5)
