@@ -9,7 +9,7 @@ class TestGame(unittest.TestCase):
     def setUp(self):
         self.mock_screen_service = MagicMock()
         self.mock_screen_service.get_dimensions.return_value = (4, 4)
-        self.game = Game(self.mock_screen_service)
+        self.game = Game(self.mock_screen_service, Grid())
 
     def test__init__should_create_fresh_grid(self):
         self.assertIsInstance(self.game.grid, Grid)
@@ -60,7 +60,7 @@ class TestGame(unittest.TestCase):
 
     def test__start__should_start_game_loop(self):
         fake_screen_service = FakeScreenService()
-        game = Game(fake_screen_service)
+        game = Game(fake_screen_service, Grid())
 
         game.start()
 

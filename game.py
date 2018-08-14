@@ -5,8 +5,8 @@ from grid import Grid
 
 
 class Game(object):
-    def __init__(self, screen_service):
-        self.grid = Grid()
+    def __init__(self, screen_service, grid):
+        self.grid = grid
         self.screen_service = screen_service
         self.dead_cells = []
         self.generation_count = 0
