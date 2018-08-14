@@ -42,6 +42,7 @@ class TestScreenService(unittest.TestCase):
         self.screen_service.draw_border()
 
         self.mock_screen.box.assert_called_once()
+        self.mock_screen.hline.assert_called_once()
         self.mock_screen.refresh.assert_called_once()
 
     def test__draw__should_draw_cells_when_given_a_list_of_tuples(self):

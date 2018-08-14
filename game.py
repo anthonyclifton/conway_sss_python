@@ -9,6 +9,9 @@ class Game(object):
         self.screen_service = screen_service
         self.dead_cells = []
 
+    def setup(self):
+        self.screen_service.draw_border()
+
     def update(self):
         if len(self.grid.cells) > 0:
             cell_to_kill = list(self.grid.cells)[0]

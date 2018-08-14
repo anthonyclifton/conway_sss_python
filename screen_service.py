@@ -36,6 +36,7 @@ class ScreenService(object):
 
     def draw_border(self):
         self.screen.box()
+        self.screen.hline(2, 1, '_', self.width - 2)
         self.screen.refresh()
 
     def draw(self, cells):

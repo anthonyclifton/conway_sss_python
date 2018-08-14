@@ -23,7 +23,6 @@ class TestGame(unittest.TestCase):
 
     def test__update__should_remove_old_cell_when_adding_new(self):
         self.game.update()
-        first_cell = list(self.game.grid.cells)[0]
         self.game.update()
         self.assertEquals(len(self.game.grid.cells), 1)
 
@@ -43,7 +42,7 @@ class TestGame(unittest.TestCase):
         self.mock_screen_service.clear.assert_has_calls(calls)
 
     def test__setup__should_setup_border_and_gui(self):
-        # self.game.setup()
-        # mock calls for border to be drawn
+        self.game.setup()
+        self.mock_screen_service.draw_border.assert_called_once()
         # mock calls for status display to be drawn along top
         pass
