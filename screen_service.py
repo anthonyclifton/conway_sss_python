@@ -91,10 +91,11 @@ class ScreenService(object):
         self.screen.refresh()
 
     def cleanup(self):
-        # todo clear the screen
+        self.screen.erase()
         self.stdscr.keypad(0)
         self.curses.echo()
         self.curses.nocbreak()
+        self.curses.curs_set(1)
         self.curses.endwin()
 
     def is_on_screen(self, x, y):

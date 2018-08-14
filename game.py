@@ -21,12 +21,12 @@ class Game(object):
         self.running = True
         while self.running:
             time.sleep(0.5)
+            self.update()
+            self.display()
+
             if self.screen_service.check_inputs() == 0:
                 self.screen_service.cleanup()
                 self.running = False
-
-            self.update()
-            self.display()
 
     def update(self):
         self.generation_count = self.generation_count + 1

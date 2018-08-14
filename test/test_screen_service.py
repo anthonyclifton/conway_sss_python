@@ -138,6 +138,8 @@ class TestScreenService(unittest.TestCase):
         self.mock_curses.echo.assert_called_once()
         self.mock_curses.nocbreak.assert_called_once()
         self.mock_curses.endwin.assert_called_once()
+        self.mock_screen.erase.assert_called_once()
+        self.mock_curses.curs_set.assert_has_calls([call(0), call(1)])
 
     def test__check_keyboard__should_return_zero_when_enter_key_pressed(self):
         key_pressed = self.screen_service.check_inputs()
