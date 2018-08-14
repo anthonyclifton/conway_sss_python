@@ -1,3 +1,7 @@
+from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, GENERATIONS_PER_SECOND_LABEL_POSITION, \
+    GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL
+
+
 class ScreenService(object):
     def __init__(self, curses):
         self.curses = curses
@@ -37,6 +41,19 @@ class ScreenService(object):
     def draw_ui(self):
         self.screen.box()
         self.screen.hline(2, 1, '_', self.width - 2)
+
+        self.screen.addstr(GENERATION_LABEL_POSITION[0],
+                           GENERATION_LABEL_POSITION[1],
+                           GENERATION_LABEL)
+
+        self.screen.addstr(GENERATIONS_PER_SECOND_LABEL_POSITION[0],
+                           GENERATIONS_PER_SECOND_LABEL_POSITION[1],
+                           GENERATIONS_PER_SECOND_LABEL)
+
+        self.screen.addstr(LIVING_CELLS_LABEL_POSITION[0],
+                           LIVING_CELLS_LABEL_POSITION[1],
+                           LIVING_CELLS_LABEL)
+
         self.screen.refresh()
 
     def draw_cells(self, cells):

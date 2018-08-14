@@ -1,6 +1,8 @@
 import unittest
 from mock import MagicMock, call
 
+from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, GENERATIONS_PER_SECOND_LABEL_POSITION, \
+    GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL
 from screen_service import ScreenService
 
 TEST_SCREEN_HEIGHT = 4
@@ -43,6 +45,21 @@ class TestScreenService(unittest.TestCase):
 
         self.mock_screen.box.assert_called_once()
         self.mock_screen.hline.assert_called_once()
+
+        calls = [
+            call(GENERATION_LABEL_POSITION[0],
+                 GENERATION_LABEL_POSITION[1],
+                 GENERATION_LABEL),
+            call(GENERATIONS_PER_SECOND_LABEL_POSITION[0],
+                 GENERATIONS_PER_SECOND_LABEL_POSITION[1],
+                 GENERATIONS_PER_SECOND_LABEL),
+            call(LIVING_CELLS_LABEL_POSITION[0],
+                 LIVING_CELLS_LABEL_POSITION[1],
+                 LIVING_CELLS_LABEL)
+        ]
+
+        self.mock_screen.addstr.assert_has_calls(calls)
+
         self.mock_screen.refresh.assert_called_once()
 
     def test__draw_cells__should_draw_cells_when_given_a_list_of_tuples(self):
