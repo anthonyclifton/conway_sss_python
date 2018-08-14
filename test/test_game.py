@@ -68,20 +68,27 @@ class TestGame(unittest.TestCase):
         self.assertEquals(game.generation_count, fake_screen_service.draw_cells_calls)
         self.assertEquals(game.generation_count, fake_screen_service.clear_cells_calls)
 
+        self.assertEquals(game.generation_count, fake_screen_service.check_inputs_calls)
+        self.assertEquals(1, fake_screen_service.cleanup_calls)
+
 
 class FakeScreenService(object):
-    def __init__(self):
+    def __init__(self, allowed_loops=10):
         self.draw_status_calls = 0
         self.draw_cells_calls = 0
         self.clear_cells_calls = 0
+        self.check_inputs_calls = 0
+        self.cleanup_calls = 0
+        self.allowed_loops = allowed_loops
 
     def check_inputs(self):
-        if self.draw_cells_calls > 10:
+        self.check_inputs_calls = self.check_inputs_calls + 1
+        if self.draw_cells_calls > self.allowed_loops:
             return 0
         return 1
 
     def cleanup(self):
-        pass
+        self.cleanup_calls = self.cleanup_calls + 1
 
     @staticmethod
     def get_dimensions():
