@@ -1,3 +1,4 @@
+import time
 from random import randint
 
 from grid import Grid
@@ -8,11 +9,18 @@ class Game(object):
         self.grid = Grid()
         self.screen_service = screen_service
         self.dead_cells = []
+        self.generation_count = 0
+        self.start_timestamp = time.time()
 
     def setup(self):
         self.screen_service.draw_ui()
 
     def update(self):
+        self.generation_count = self.generation_count + 1
+        generations_per_second = int(self.generation_count / (time.time() - self.start_timestamp))
+        self.screen_service.draw_status(self.generation_count,
+                                        generations_per_second,
+                                        len(self.grid.cells))
         if len(self.grid.cells) > 0:
             cell_to_kill = list(self.grid.cells)[0]
             self.grid.kill_cell(cell_to_kill)

@@ -1,4 +1,5 @@
 import unittest
+
 from mock import MagicMock, call
 from game import Game
 from grid import Grid
@@ -15,6 +16,9 @@ class TestGame(unittest.TestCase):
 
     def test__init__should_store_screen_service(self):
         self.assertEquals(self.game.screen_service, self.mock_screen_service)
+
+    def test__init__should_store_game_start_timestamp(self):
+        self.assertIsNotNone(self.game.start_timestamp)
 
     def test__update__should_add_new_random_cell(self):
         self.assertEquals(len(self.game.grid.cells), 0)
@@ -40,6 +44,15 @@ class TestGame(unittest.TestCase):
         self.game.display()
         calls = [call([first_cell])]
         self.mock_screen_service.clear_cells.assert_has_calls(calls)
+
+    def test__update__should_increment_generation_count(self):
+        self.assertEquals(self.game.generation_count, 0)
+        self.game.update()
+        self.assertEquals(self.game.generation_count, 1)
+
+    def test__update__should_display_status(self):
+        self.game.update()
+        self.mock_screen_service.draw_status.assert_called_once()
 
     def test__setup__should_setup_border_and_gui(self):
         self.game.setup()

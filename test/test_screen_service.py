@@ -2,7 +2,8 @@ import unittest
 from mock import MagicMock, call
 
 from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, GENERATIONS_PER_SECOND_LABEL_POSITION, \
-    GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL
+    GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL, GENERATION_VALUE_POSITION, \
+    GENERATIONS_PER_SECOND_VALUE_POSITION, LIVING_CELLS_VALUE_POSITION
 from screen_service import ScreenService
 
 TEST_SCREEN_HEIGHT = 4
@@ -73,6 +74,31 @@ class TestScreenService(unittest.TestCase):
         calls = [call(1, 1, 'O'), call(2, 2, 'O'), call(3, 3, 'O')]
 
         self.mock_screen.addch.assert_has_calls(calls)
+        self.mock_screen.refresh.assert_called_once()
+
+    def test__draw_status__should_draw_status_on_status_line(self):
+        expected_generation_count = str(123)
+        expected_generations_per_second = str(12.3)
+        expected_living_cells = str(45)
+
+        self.screen_service.draw_status(expected_generation_count,
+                                        expected_generations_per_second,
+                                        expected_living_cells)
+
+        calls = [
+            call(GENERATION_VALUE_POSITION[0],
+                 GENERATION_VALUE_POSITION[1],
+                 expected_generation_count),
+            call(GENERATIONS_PER_SECOND_VALUE_POSITION[0],
+                 GENERATIONS_PER_SECOND_VALUE_POSITION[1],
+                 expected_generations_per_second),
+            call(LIVING_CELLS_VALUE_POSITION[0],
+                 LIVING_CELLS_VALUE_POSITION[1],
+                 expected_living_cells)
+
+        ]
+
+        self.mock_screen.addstr.assert_has_calls(calls)
         self.mock_screen.refresh.assert_called_once()
 
     def test__clear_cells__should_clear_cells_when_given_a_list_of_tuples(self):

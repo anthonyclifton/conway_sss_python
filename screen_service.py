@@ -1,5 +1,6 @@
 from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, GENERATIONS_PER_SECOND_LABEL_POSITION, \
-    GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL
+    GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL, GENERATION_VALUE_POSITION, \
+    GENERATIONS_PER_SECOND_VALUE_POSITION, LIVING_CELLS_VALUE_POSITION
 
 
 class ScreenService(object):
@@ -53,6 +54,25 @@ class ScreenService(object):
         self.screen.addstr(LIVING_CELLS_LABEL_POSITION[0],
                            LIVING_CELLS_LABEL_POSITION[1],
                            LIVING_CELLS_LABEL)
+
+        self.screen.refresh()
+
+    def draw_status(self,
+                    generation_count,
+                    generations_per_second,
+                    living_cells):
+
+        self.screen.addstr(GENERATION_VALUE_POSITION[0],
+                           GENERATION_VALUE_POSITION[1],
+                           str(generation_count))
+
+        self.screen.addstr(GENERATIONS_PER_SECOND_VALUE_POSITION[0],
+                           GENERATIONS_PER_SECOND_VALUE_POSITION[1],
+                           str(generations_per_second))
+
+        self.screen.addstr(LIVING_CELLS_VALUE_POSITION[0],
+                           LIVING_CELLS_VALUE_POSITION[1],
+                           str(living_cells))
 
         self.screen.refresh()
 
