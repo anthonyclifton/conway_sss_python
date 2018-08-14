@@ -57,5 +57,41 @@ class TestGame(unittest.TestCase):
     def test__setup__should_setup_border_and_gui(self):
         self.game.setup()
         self.mock_screen_service.draw_ui.assert_called_once()
-        # mock calls for status display to be drawn along top
+
+    def test__start__should_start_game_loop(self):
+        fake_screen_service = FakeScreenService()
+        game = Game(fake_screen_service)
+
+        game.start()
+
+        self.assertEquals(game.generation_count, fake_screen_service.draw_status_calls)
+        self.assertEquals(game.generation_count, fake_screen_service.draw_cells_calls)
+        self.assertEquals(game.generation_count, fake_screen_service.clear_cells_calls)
+
+
+class FakeScreenService(object):
+    def __init__(self):
+        self.draw_status_calls = 0
+        self.draw_cells_calls = 0
+        self.clear_cells_calls = 0
+
+    def check_inputs(self):
+        if self.draw_cells_calls > 10:
+            return 0
+        return 1
+
+    def cleanup(self):
         pass
+
+    @staticmethod
+    def get_dimensions():
+        return 10, 10
+
+    def draw_status(self, generation_count, generations_per_second, living_cells):
+        self.draw_status_calls = self.draw_status_calls + 1
+
+    def draw_cells(self, cells):
+        self.draw_cells_calls = self.draw_cells_calls + 1
+
+    def clear_cells(self, cells):
+        self.clear_cells_calls = self.clear_cells_calls + 1

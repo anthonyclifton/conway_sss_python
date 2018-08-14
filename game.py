@@ -11,9 +11,21 @@ class Game(object):
         self.dead_cells = []
         self.generation_count = 0
         self.start_timestamp = time.time()
+        self.running = False
 
     def setup(self):
         self.screen_service.draw_ui()
+
+    def start(self):
+        self.running = True
+        while self.running:
+            time.sleep(0.5)
+            if self.screen_service.check_inputs() == 0:
+                self.screen_service.cleanup()
+                self.running = False
+
+            self.update()
+            self.display()
 
     def update(self):
         self.generation_count = self.generation_count + 1
