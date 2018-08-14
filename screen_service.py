@@ -8,8 +8,8 @@ class ScreenService(object):
         self.stdscr.keypad(1)
         self.height, self.width = self.stdscr.getmaxyx()
         self.screen = self.stdscr.subwin(
-            self.height - 1,
-            self.width - 1,
+            self.height,
+            self.width,
             0,
             0)
         self.screen.nodelay(1)

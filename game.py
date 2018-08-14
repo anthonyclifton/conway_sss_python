@@ -14,7 +14,8 @@ class Game(object):
             cell_to_kill = list(self.grid.cells)[0]
             self.grid.kill_cell(cell_to_kill)
             self.dead_cells = [cell_to_kill]
-        random_cell = (randint(1, 20), randint(1, 20))
+        random_cell = (randint(1, self.screen_service.height - 2),
+                       randint(1, self.screen_service.width - 2))
         self.grid.birth_cell(random_cell)
 
     def display(self):
