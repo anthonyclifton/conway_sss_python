@@ -3,7 +3,7 @@ from mock import MagicMock, call
 
 from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, GENERATIONS_PER_SECOND_LABEL_POSITION, \
     GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL, GENERATION_VALUE_POSITION, \
-    GENERATIONS_PER_SECOND_VALUE_POSITION, LIVING_CELLS_VALUE_POSITION
+    GENERATIONS_PER_SECOND_VALUE_POSITION, LIVING_CELLS_VALUE_POSITION, LOWER_CASE_Q_KEY, UPPER_CASE_Q_KEY
 from screen_service import ScreenService
 
 TEST_SCREEN_HEIGHT = 4
@@ -13,7 +13,7 @@ TEST_SCREEN_WIDTH = 4
 class TestScreenService(unittest.TestCase):
     def setUp(self):
         self.mock_screen = MagicMock()
-        self.mock_screen.getch.return_value = 10
+        # self.mock_screen.getch.return_value = 10
 
         self.mock_stdscn = MagicMock()
         self.mock_stdscn.subwin.return_value = self.mock_screen
@@ -141,9 +141,20 @@ class TestScreenService(unittest.TestCase):
         self.mock_screen.erase.assert_called_once()
         self.mock_curses.curs_set.assert_has_calls([call(0), call(1)])
 
-    def test__check_keyboard__should_return_zero_when_enter_key_pressed(self):
+    def test__check_keyboard__should_return_False_when_q_key_pressed(self):
+        self.mock_screen.getch.return_value = LOWER_CASE_Q_KEY
         key_pressed = self.screen_service.check_inputs()
-        self.assertEquals(key_pressed, 0)
+        self.assertEquals(key_pressed, False)
+
+    def test__check_keyboard__should_return_False_when_Q_key_pressed(self):
+        self.mock_screen.getch.return_value = UPPER_CASE_Q_KEY
+        key_pressed = self.screen_service.check_inputs()
+        self.assertEquals(key_pressed, False)
+
+    def test__check_keyboard__should_return_True_when_no_key_pressed(self):
+        self.mock_screen.getch.return_value = None
+        key_pressed = self.screen_service.check_inputs()
+        self.assertEquals(key_pressed, True)
 
     def test__handle_terminal_resize__should_update_screen(self):
         self.screen_service.handle_terminal_resize()

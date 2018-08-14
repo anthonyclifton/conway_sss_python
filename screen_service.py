@@ -1,6 +1,6 @@
 from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, GENERATIONS_PER_SECOND_LABEL_POSITION, \
     GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL, GENERATION_VALUE_POSITION, \
-    GENERATIONS_PER_SECOND_VALUE_POSITION, LIVING_CELLS_VALUE_POSITION
+    GENERATIONS_PER_SECOND_VALUE_POSITION, LIVING_CELLS_VALUE_POSITION, UPPER_CASE_Q_KEY, LOWER_CASE_Q_KEY
 
 
 class ScreenService(object):
@@ -23,9 +23,9 @@ class ScreenService(object):
         c = self.screen.getch()
         if c == self.curses.KEY_RESIZE:
             self.handle_terminal_resize()
-        if c == 10:
-            return 0
-        return 1
+        if c in [UPPER_CASE_Q_KEY, LOWER_CASE_Q_KEY]:
+            return False
+        return True
 
     def handle_terminal_resize(self):
         self.height, self.width = self.stdscr.getmaxyx()

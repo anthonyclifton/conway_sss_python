@@ -24,7 +24,7 @@ class Game(object):
             self.update()
             self.display()
 
-            if self.screen_service.check_inputs() == 0:
+            if not self.screen_service.check_inputs():
                 self.screen_service.cleanup()
                 self.running = False
 
