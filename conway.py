@@ -8,7 +8,7 @@ screen_service = ScreenService(curses)
 game = Game(screen_service)
 
 if __name__ == '__main__':
-    screen_service.draw_border()
+    screen_service.draw_ui()
     running = True
     while running:
         sleep(0.5)

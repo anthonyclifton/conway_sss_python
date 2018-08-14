@@ -10,7 +10,7 @@ class Game(object):
         self.dead_cells = []
 
     def setup(self):
-        self.screen_service.draw_border()
+        self.screen_service.draw_ui()
 
     def update(self):
         if len(self.grid.cells) > 0:
@@ -24,5 +24,5 @@ class Game(object):
         self.grid.birth_cell(random_cell)
 
     def display(self):
-        self.screen_service.clear(self.dead_cells)
-        self.screen_service.draw(list(self.grid.cells))
+        self.screen_service.clear_cells(self.dead_cells)
+        self.screen_service.draw_cells(list(self.grid.cells))

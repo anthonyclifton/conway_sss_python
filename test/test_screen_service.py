@@ -38,53 +38,53 @@ class TestScreenService(unittest.TestCase):
         dimensions = self.screen_service.get_dimensions()
         self.assertEquals(dimensions, (4, 4))
 
-    def test__draw_border__should_draw_border(self):
-        self.screen_service.draw_border()
+    def test__draw_ui__should_draw_border(self):
+        self.screen_service.draw_ui()
 
         self.mock_screen.box.assert_called_once()
         self.mock_screen.hline.assert_called_once()
         self.mock_screen.refresh.assert_called_once()
 
-    def test__draw__should_draw_cells_when_given_a_list_of_tuples(self):
+    def test__draw_cells__should_draw_cells_when_given_a_list_of_tuples(self):
         self.screen_service.height = 5
         self.screen_service.width = 5
 
         cells = [(1, 1), (2, 2), (3, 3)]
 
-        self.screen_service.draw(cells)
+        self.screen_service.draw_cells(cells)
 
         calls = [call(1, 1, 'O'), call(2, 2, 'O'), call(3, 3, 'O')]
 
         self.mock_screen.addch.assert_has_calls(calls)
         self.mock_screen.refresh.assert_called_once()
 
-    def test__clear__should_clear_cells_when_given_a_list_of_tuples(self):
+    def test__clear_cells__should_clear_cells_when_given_a_list_of_tuples(self):
         self.screen_service.height = 5
         self.screen_service.width = 5
 
         cells = [(1, 1), (2, 2), (3, 3)]
 
-        self.screen_service.clear(cells)
+        self.screen_service.clear_cells(cells)
 
         calls = [call(1, 1, ' '), call(2, 2, ' '), call(3, 3, ' ')]
 
         self.mock_screen.addch.assert_has_calls(calls)
         self.mock_screen.refresh.assert_called_once()
 
-    def test__draw__should_not_draw_tuple_that_is_off_the_screen(self):
+    def test__draw_cells__should_not_draw_tuple_that_is_off_the_screen(self):
         self.screen_service.height = 3
         self.screen_service.width = 3
 
         cells = [(0, 1), (1, 0), (2, 1), (1, 2), (10, 10), (-10, -10)]
-        self.screen_service.draw(cells)
+        self.screen_service.draw_cells(cells)
         self.mock_screen.addch.assert_not_called()
 
-    def test__clear__should_not_clear_tuple_that_is_off_the_screen(self):
+    def test__clear_cells__should_not_clear_tuple_that_is_off_the_screen(self):
         self.screen_service.height = 3
         self.screen_service.width = 3
 
         cells = [(0, 1), (1, 0), (2, 1), (1, 2), (10, 10), (-10, -10)]
-        self.screen_service.clear(cells)
+        self.screen_service.clear_cells(cells)
         self.mock_screen.addch.assert_not_called()
 
     def test__cleanup__should_return_terminal_to_sane_state(self):

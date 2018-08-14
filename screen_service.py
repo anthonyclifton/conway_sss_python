@@ -32,21 +32,21 @@ class ScreenService(object):
         self.screen.nodelay(1)
         self.screen.erase()
         self.screen.refresh()
-        self.draw_border()
+        self.draw_ui()
 
-    def draw_border(self):
+    def draw_ui(self):
         self.screen.box()
         self.screen.hline(2, 1, '_', self.width - 2)
         self.screen.refresh()
 
-    def draw(self, cells):
+    def draw_cells(self, cells):
         for cell in cells:
             y, x = cell
             if self.is_on_screen(x, y):
                 self.screen.addch(y, x, 'O')
         self.screen.refresh()
 
-    def clear(self, cells):
+    def clear_cells(self, cells):
         for cell in cells:
             y, x = cell
             if self.is_on_screen(x, y):

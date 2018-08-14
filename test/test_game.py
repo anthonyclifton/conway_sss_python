@@ -31,7 +31,7 @@ class TestGame(unittest.TestCase):
         self.game.grid.cells.update(set(expected_cells))
         self.game.display()
         calls = [call(expected_cells)]
-        self.mock_screen_service.draw.assert_has_calls(calls)
+        self.mock_screen_service.draw_cells.assert_has_calls(calls)
 
     def test__update__should_clear_dead_cell_from_screen(self):
         self.game.update()
@@ -39,10 +39,10 @@ class TestGame(unittest.TestCase):
         self.game.update()
         self.game.display()
         calls = [call([first_cell])]
-        self.mock_screen_service.clear.assert_has_calls(calls)
+        self.mock_screen_service.clear_cells.assert_has_calls(calls)
 
     def test__setup__should_setup_border_and_gui(self):
         self.game.setup()
-        self.mock_screen_service.draw_border.assert_called_once()
+        self.mock_screen_service.draw_ui.assert_called_once()
         # mock calls for status display to be drawn along top
         pass
