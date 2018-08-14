@@ -3,8 +3,8 @@ from mock import MagicMock, call
 
 from screen_service import ScreenService
 
-TEST_SCREEN_HEIGHT = 1
-TEST_SCREEN_WIDTH = 1
+TEST_SCREEN_HEIGHT = 4
+TEST_SCREEN_WIDTH = 4
 
 
 class TestScreenService(unittest.TestCase):
@@ -31,8 +31,12 @@ class TestScreenService(unittest.TestCase):
         self.mock_stdscn.keypad.assert_called_once_with(1)
         self.mock_stdscn.getmaxyx.assert_called_once()
         self.mock_screen.nodelay.assert_called_once_with(1)
-        self.assertEquals(self.screen_service.height, 1)
-        self.assertEquals(self.screen_service.width, 1)
+        self.assertEquals(self.screen_service.height, 4)
+        self.assertEquals(self.screen_service.width, 4)
+
+    def test__get_dimensions__should_return_screen_dimensions(self):
+        dimensions = self.screen_service.get_dimensions()
+        self.assertEquals(dimensions, (4, 4))
 
     def test__draw_border__should_draw_border(self):
         self.screen_service.draw_border()
@@ -98,8 +102,8 @@ class TestScreenService(unittest.TestCase):
     def test__handle_terminal_resize__should_update_screen(self):
         self.screen_service.handle_terminal_resize()
 
-        self.assertEquals(self.screen_service.height, 1)
-        self.assertEquals(self.screen_service.width, 1)
+        self.assertEquals(self.screen_service.height, 4)
+        self.assertEquals(self.screen_service.width, 4)
         self.assertEquals(self.mock_stdscn.subwin.call_count, 2)
 
         self.assertEquals(self.mock_screen.nodelay.call_count, 2)

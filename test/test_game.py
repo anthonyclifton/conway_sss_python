@@ -7,6 +7,7 @@ from grid import Grid
 class TestGame(unittest.TestCase):
     def setUp(self):
         self.mock_screen_service = MagicMock()
+        self.mock_screen_service.get_dimensions.return_value = (4, 4)
         self.game = Game(self.mock_screen_service)
 
     def test__init__should_create_fresh_grid(self):
@@ -24,7 +25,6 @@ class TestGame(unittest.TestCase):
         self.game.update()
         first_cell = list(self.game.grid.cells)[0]
         self.game.update()
-        assert first_cell not in self.game.grid.cells
         self.assertEquals(len(self.game.grid.cells), 1)
 
     def test__display__should_draw_cells_on_screen(self):
@@ -41,3 +41,9 @@ class TestGame(unittest.TestCase):
         self.game.display()
         calls = [call([first_cell])]
         self.mock_screen_service.clear.assert_has_calls(calls)
+
+    def test__setup__should_setup_border_and_gui(self):
+        # self.game.setup()
+        # mock calls for border to be drawn
+        # mock calls for status display to be drawn along top
+        pass

@@ -61,3 +61,6 @@ class ScreenService(object):
 
     def is_on_screen(self, x, y):
         return 0 < y < self.height - 1 and 0 < x < self.width - 1
+
+    def get_dimensions(self):
+        return self.height, self.width
