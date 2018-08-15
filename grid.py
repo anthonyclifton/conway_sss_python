@@ -11,3 +11,6 @@ class Grid(object):
 
     def kill_cell(self, coordinates):
         self.cells.remove(coordinates)
+
+    def get_cells(self):
+        return self.cells
