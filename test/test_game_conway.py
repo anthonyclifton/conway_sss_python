@@ -91,4 +91,15 @@ class TestGameConway(unittest.TestCase):
         self.assertEquals(list(self.grid.cells)[0], (-1, 1))
 
     def test__update__should_handle_simple_oscillator(self):
-        pass
+        self.grid.birth_cell((0, 0))
+        self.grid.birth_cell((0, 1))
+        self.grid.birth_cell((0, 2))
+
+        expected_cells = {
+            (1, 1),
+            (0, 1),
+            (-1, 1)
+        }
+
+        self.game.update()
+        self.assertEquals(self.grid.cells, expected_cells)
