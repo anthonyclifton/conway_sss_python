@@ -1,6 +1,7 @@
+import time
 import unittest
 
-from mock import MagicMock, call
+from mock import MagicMock, call, patch
 from game import Game
 from grid import Grid
 
@@ -43,7 +44,8 @@ class TestGame(unittest.TestCase):
         self.game.setup()
         self.mock_screen_service.draw_ui.assert_called_once()
 
-    def test__start__should_start_game_loop(self):
+    @patch('game.time.sleep')
+    def test__start__should_start_game_loop(self, mock_sleep):
         fake_screen_service = FakeScreenService()
         mock_file_service = MagicMock()
         game = Game(fake_screen_service, mock_file_service, Grid())
@@ -56,6 +58,18 @@ class TestGame(unittest.TestCase):
 
         self.assertEquals(game.generation_count, fake_screen_service.check_inputs_calls)
         self.assertEquals(1, fake_screen_service.cleanup_calls)
+
+    @patch('game.time.sleep')
+    def test__start__should_run_at_specified_rate(self, mock_sleep):
+        fake_screen_service = FakeScreenService(3)
+        mock_file_service = MagicMock()
+        game = Game(fake_screen_service, mock_file_service, Grid())
+
+        sleep_time = 0.123
+        game.start(sleep_time)
+
+        calls = [call(sleep_time), call(sleep_time), call(sleep_time)]
+        mock_sleep.assert_has_calls(calls)
 
 
 class FakeScreenService(object):

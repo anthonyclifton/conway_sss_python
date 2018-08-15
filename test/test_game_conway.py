@@ -11,8 +11,12 @@ class TestGameConway(unittest.TestCase):
         self.mock_screen_service = MagicMock()
         self.mock_screen_service.get_dimensions.return_value = (4, 4)
 
+        self.mock_file_service = MagicMock()
+
         self.grid = Grid()
-        self.game = Game(self.mock_screen_service, self.grid)
+        self.game = Game(self.mock_screen_service,
+                         self.mock_file_service,
+                         self.grid)
 
         # lonely cells die (alive, less than 2 neighbors)
         # happy cells live (alive, 2 or 3 neighbors)

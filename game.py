@@ -16,11 +16,11 @@ class Game(object):
     def setup(self):
         self.screen_service.draw_ui()
 
-    def start(self):
+    def start(self, sleep_time=0.5):
         self.setup()
         self.running = True
         while self.running:
-            time.sleep(0.5)
+            time.sleep(sleep_time)
             self.update()
             self.display()
 
