@@ -20,15 +20,15 @@ class TestGame(unittest.TestCase):
     def test__init__should_store_game_start_timestamp(self):
         self.assertIsNotNone(self.game.start_timestamp)
 
-    def test__update__should_add_new_random_cell(self):
-        self.assertEquals(len(self.game.grid.cells), 0)
-        self.game.update()
-        self.assertEquals(len(self.game.grid.cells), 1)
+    # def test__update__should_add_new_random_cell(self):
+    #     self.assertEquals(len(self.game.grid.cells), 0)
+    #     self.game.update()
+    #     self.assertEquals(len(self.game.grid.cells), 1)
 
-    def test__update__should_remove_old_cell_when_adding_new(self):
-        self.game.update()
-        self.game.update()
-        self.assertEquals(len(self.game.grid.cells), 1)
+    # def test__update__should_remove_old_cell_when_adding_new(self):
+    #     self.game.update()
+    #     self.game.update()
+    #     self.assertEquals(len(self.game.grid.cells), 1)
 
     def test__display__should_draw_cells_on_screen(self):
         expected_cells = [(0, 0), (1, 1), (2, 2)]
@@ -37,13 +37,13 @@ class TestGame(unittest.TestCase):
         calls = [call(expected_cells)]
         self.mock_screen_service.draw_cells.assert_has_calls(calls)
 
-    def test__update__should_clear_dead_cell_from_screen(self):
-        self.game.update()
-        first_cell = list(self.game.grid.cells)[0]
-        self.game.update()
-        self.game.display()
-        calls = [call([first_cell])]
-        self.mock_screen_service.clear_cells.assert_has_calls(calls)
+    # def test__update__should_clear_dead_cell_from_screen(self):
+    #     self.game.update()
+    #     first_cell = list(self.game.grid.cells)[0]
+    #     self.game.update()
+    #     self.game.display()
+    #     calls = [call([first_cell])]
+    #     self.mock_screen_service.clear_cells.assert_has_calls(calls)
 
     def test__update__should_increment_generation_count(self):
         self.assertEquals(self.game.generation_count, 0)

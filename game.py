@@ -32,16 +32,29 @@ class Game(object):
         self.screen_service.draw_status(self.generation_count,
                                         generations_per_second,
                                         len(self.grid.cells))
-        if len(self.grid.cells) > 0:
-            cell_to_kill = list(self.grid.cells)[0]
-            self.grid.kill_cell(cell_to_kill)
-            self.dead_cells = [cell_to_kill]
+        # if len(self.grid.cells) > 0:
+        #     cell_to_kill = list(self.grid.cells)[0]
+        #     self.grid.kill_cell(cell_to_kill)
+        #     self.dead_cells = [cell_to_kill]
+        #
+        # screen_height, screen_width = self.screen_service.get_dimensions()
+        # random_cell = (randint(0, screen_height),
+        #                randint(0, screen_width))
+        # self.grid.birth_cell(random_cell)
+        self.dead_cells = []
 
-        screen_height, screen_width = self.screen_service.get_dimensions()
-        random_cell = (randint(0, screen_height),
-                       randint(0, screen_width))
-        self.grid.birth_cell(random_cell)
+        for cell in self.grid.cells:
+            neighbors = self.grid.count_neighbors(cell)
+
+            if neighbors < 2:
+                self.dead_cells.append(cell)
+
+        self._remove_dead_cells()
 
     def display(self):
         self.screen_service.clear_cells(self.dead_cells)
         self.screen_service.draw_cells(list(self.grid.cells))
+
+    def _remove_dead_cells(self):
+        for dead_cell in self.dead_cells:
+            self.grid.kill_cell(dead_cell)
