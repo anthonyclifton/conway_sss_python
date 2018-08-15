@@ -49,7 +49,7 @@ class Game(object):
         for cell in self.grid.cells:
             empty_neighbors = self.grid.get_adjacent_empty_cells(cell)
             birthing_cells = [possible for possible in empty_neighbors
-                              if self.grid.count_neighbors(possible) == 3]
+                              if self.grid.count_neighbors(possible) >= 3]
             new_cells.update(birthing_cells)
         return list(new_cells)
 
