@@ -3,9 +3,10 @@ from random import randint
 
 
 class Game(object):
-    def __init__(self, screen_service, grid):
+    def __init__(self, screen_service, file_service, grid):
         self.grid = grid
         self.screen_service = screen_service
+        self.file_service = file_service
         self.dead_cells = []
         self.new_cells = []
         self.generation_count = 0
