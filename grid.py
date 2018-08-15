@@ -5,8 +5,15 @@ class Grid(object):
     def birth_cell(self, coordinates):
         self.cells.add(coordinates)
 
+    def birth_cells(self, cells):
+        for cell in cells:
+            self.birth_cell(cell)
+
     def kill_cell(self, coordinates):
         self.cells.remove(coordinates)
+
+    def get_cells(self):
+        return self.cells
 
     def count_neighbors(self, coordinates):
         return len([cell for cell in self.cells if self._are_neighbors(coordinates, cell)])
