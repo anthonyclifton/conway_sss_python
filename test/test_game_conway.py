@@ -15,7 +15,6 @@ class TestGameConway(unittest.TestCase):
         # happy cells live (alive, 2 or 3 neighbors)
         # crowded cells die (alive, more than 3 neighbors)
         # new cells appear (dead, 3 neighbors or more)
-        # from grid import Grid
 
     def test__update__should_kill_lonely_cells_with_zero_neighbors(self):
         grid = Grid()
@@ -52,3 +51,15 @@ class TestGameConway(unittest.TestCase):
         game.update()
         self.assertEquals(len(grid.cells), 1)
         self.assertEquals(list(grid.cells)[0], (-1, 1))
+
+    def test__update__should_kill_crowded_cells_with_more_than_three_neighbors(self):
+        grid = Grid()
+        game = Game(self.mock_screen_service, grid)
+        grid.birth_cell((0, 0))
+        grid.birth_cell((0, 2))
+        grid.birth_cell((-1, 1))
+        grid.birth_cell((-2, 0))
+        grid.birth_cell((-2, 2))
+
+        game.update()
+        self.assertEquals(len(grid.cells), 0)

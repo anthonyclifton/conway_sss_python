@@ -46,7 +46,7 @@ class Game(object):
         for cell in self.grid.cells:
             neighbors = self.grid.count_neighbors(cell)
 
-            if neighbors < 2:
+            if neighbors < 2 or neighbors > 3:
                 self.dead_cells.append(cell)
 
         self._remove_dead_cells()
