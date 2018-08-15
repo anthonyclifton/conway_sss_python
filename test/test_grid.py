@@ -52,3 +52,10 @@ class TestGrid(unittest.TestCase):
         neighbors_count = self.grid.count_neighbors((0, 0))
         self.assertEquals(neighbors_count, 8)
 
+    def test__count_neighbors__should_return_just_one_when_non_adjacent_cells_alive(self):
+        self.grid.cells = {
+            (0, 0), (0, 1), (0, 2)
+        }
+
+        neighbors_count = self.grid.count_neighbors((0, 0))
+        self.assertEquals(neighbors_count, 1)
