@@ -24,3 +24,8 @@ class TestGrid(unittest.TestCase):
 
         self.grid.kill_cell(cell_to_kill)
         assert cell_to_kill not in self.grid.cells
+
+    def test__grid__should_set_cells(self):
+        cells_to_birth = [(0, 0), (1, 1)]
+        self.grid.birth_cells(cells_to_birth)
+        self.assertEquals(self.grid.cells, set(cells_to_birth))

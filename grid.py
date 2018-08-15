@@ -5,5 +5,9 @@ class Grid(object):
     def birth_cell(self, coordinates):
         self.cells.add(coordinates)
 
+    def birth_cells(self, cells):
+        for cell in cells:
+            self.birth_cell(cell)
+
     def kill_cell(self, coordinates):
         self.cells.remove(coordinates)
