@@ -31,3 +31,24 @@ class TestGameConway(unittest.TestCase):
         grid.birth_cell((0, 1))
         game.update()
         self.assertEquals(len(grid.cells), 0)
+
+    def test__update__should_not_kill_happy_cells_with_two_neighbors(self):
+        grid = Grid()
+        game = Game(self.mock_screen_service, grid)
+        grid.birth_cell((0, 0))
+        grid.birth_cell((1, 1))
+        grid.birth_cell((2, 2))
+        game.update()
+        self.assertEquals(len(grid.cells), 1)
+        self.assertEquals(list(grid.cells)[0], (1, 1))
+
+    def test__update__should_not_kill_happy_cells_with_three_neighbors(self):
+        grid = Grid()
+        game = Game(self.mock_screen_service, grid)
+        grid.birth_cell((0, 0))
+        grid.birth_cell((0, 2))
+        grid.birth_cell((-1, 1))
+        grid.birth_cell((-2, 2))
+        game.update()
+        self.assertEquals(len(grid.cells), 1)
+        self.assertEquals(list(grid.cells)[0], (-1, 1))
