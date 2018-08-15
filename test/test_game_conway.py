@@ -63,3 +63,13 @@ class TestGameConway(unittest.TestCase):
 
         game.update()
         self.assertEquals(len(grid.cells), 0)
+
+    def test__update__should_birth_cells_when_they_would_have_three_neighbors(self):
+        grid = Grid()
+        game = Game(self.mock_screen_service, grid)
+        grid.birth_cell((0, 0))
+        grid.birth_cell((0, 2))
+        grid.birth_cell((-2, 2))
+        game.update()
+        # self.assertEquals(len(grid.cells), 1)
+        # self.assertEquals(list(grid.cells)[0], (-1, 1))

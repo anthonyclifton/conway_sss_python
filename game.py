@@ -41,19 +41,22 @@ class Game(object):
         # random_cell = (randint(0, screen_height),
         #                randint(0, screen_width))
         # self.grid.birth_cell(random_cell)
-        self.dead_cells = []
 
-        for cell in self.grid.cells:
-            neighbors = self.grid.count_neighbors(cell)
-
-            if neighbors < 2 or neighbors > 3:
-                self.dead_cells.append(cell)
-
+        self.dead_cells = self._find_dying_cells()
         self._remove_dead_cells()
 
     def display(self):
         self.screen_service.clear_cells(self.dead_cells)
         self.screen_service.draw_cells(list(self.grid.cells))
+
+    def _find_dying_cells(self):
+        dying_cells = []
+        for cell in self.grid.cells:
+            neighbors = self.grid.count_neighbors(cell)
+
+            if neighbors < 2 or neighbors > 3:
+                dying_cells.append(cell)
+        return dying_cells
 
     def _remove_dead_cells(self):
         for dead_cell in self.dead_cells:

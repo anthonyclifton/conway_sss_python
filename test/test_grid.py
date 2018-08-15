@@ -59,3 +59,34 @@ class TestGrid(unittest.TestCase):
 
         neighbors_count = self.grid.count_neighbors((0, 0))
         self.assertEquals(neighbors_count, 1)
+
+    def test__get_adjacent_empty_cells__should_return_list_of_empty_adjacent_cells(self):
+        self.grid.cells = {(0, 0)}
+
+        expected_adjacent_empty_cells = [
+            (1, -1), (1, 0), (1, 1),
+            (0, -1), (0, 1),
+            (-1, -1), (-1, 0), (-1, 1)
+        ]
+
+        actual_adjacent_empty_cells = self.grid.get_adjacent_empty_cells((0, 0))
+
+        self.assertEquals(len(actual_adjacent_empty_cells), 8)
+        self.assertEquals(set(actual_adjacent_empty_cells), set(expected_adjacent_empty_cells))
+
+    def test__get_adjacent_empty_cells__should_return_list_of_empties_minus_alives(self):
+        self.grid.cells = {
+            (1, 0),
+            (0, -1), (0, 1),
+            (-1, 0),
+        }
+
+        expected_adjacent_empty_cells = [
+            (1, -1), (1, 1),
+            (-1, -1), (-1, 1)
+        ]
+
+        actual_adjacent_empty_cells = self.grid.get_adjacent_empty_cells((0, 0))
+
+        self.assertEquals(len(actual_adjacent_empty_cells), 4)
+        self.assertEquals(set(actual_adjacent_empty_cells), set(expected_adjacent_empty_cells))
