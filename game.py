@@ -7,6 +7,7 @@ class Game(object):
         self.grid = grid
         self.screen_service = screen_service
         self.dead_cells = []
+        self.new_cells = []
         self.generation_count = 0
         self.start_timestamp = time.time()
         self.running = False
@@ -32,22 +33,25 @@ class Game(object):
         self.screen_service.draw_status(self.generation_count,
                                         generations_per_second,
                                         len(self.grid.cells))
-        # if len(self.grid.cells) > 0:
-        #     cell_to_kill = list(self.grid.cells)[0]
-        #     self.grid.kill_cell(cell_to_kill)
-        #     self.dead_cells = [cell_to_kill]
-        #
-        # screen_height, screen_width = self.screen_service.get_dimensions()
-        # random_cell = (randint(0, screen_height),
-        #                randint(0, screen_width))
-        # self.grid.birth_cell(random_cell)
 
+        self.new_cells = self._find_new_cells()
         self.dead_cells = self._find_dying_cells()
+
+        self._add_new_cells()
         self._remove_dead_cells()
 
     def display(self):
         self.screen_service.clear_cells(self.dead_cells)
         self.screen_service.draw_cells(list(self.grid.cells))
+
+    def _find_new_cells(self):
+        new_cells = set()
+        for cell in self.grid.cells:
+            empty_neighbors = self.grid.get_adjacent_empty_cells(cell)
+            birthing_cells = [possible for possible in empty_neighbors
+                              if self.grid.count_neighbors(possible) == 3]
+            new_cells.update(birthing_cells)
+        return list(new_cells)
 
     def _find_dying_cells(self):
         dying_cells = []
@@ -57,6 +61,10 @@ class Game(object):
             if neighbors < 2 or neighbors > 3:
                 dying_cells.append(cell)
         return dying_cells
+
+    def _add_new_cells(self):
+        for new_cell in self.new_cells:
+            self.grid.birth_cell(new_cell)
 
     def _remove_dead_cells(self):
         for dead_cell in self.dead_cells:

@@ -48,9 +48,13 @@ class TestGameConway(unittest.TestCase):
         grid.birth_cell((0, 2))
         grid.birth_cell((-1, 1))
         grid.birth_cell((-2, 2))
+
+        expected_cells = {
+            (0, 1),
+            (-1, 1), (-1, 2)
+        }
         game.update()
-        self.assertEquals(len(grid.cells), 1)
-        self.assertEquals(list(grid.cells)[0], (-1, 1))
+        self.assertEquals(grid.cells, expected_cells)
 
     def test__update__should_kill_crowded_cells_with_more_than_three_neighbors(self):
         grid = Grid()
@@ -61,8 +65,14 @@ class TestGameConway(unittest.TestCase):
         grid.birth_cell((-2, 0))
         grid.birth_cell((-2, 2))
 
+        expected_cells = {
+            (0, 1),
+            (-1, 0), (-1, 2),
+            (-2, 1)
+        }
+
         game.update()
-        self.assertEquals(len(grid.cells), 0)
+        self.assertEquals(grid.cells, expected_cells)
 
     def test__update__should_birth_cells_when_they_would_have_three_neighbors(self):
         grid = Grid()
@@ -71,5 +81,5 @@ class TestGameConway(unittest.TestCase):
         grid.birth_cell((0, 2))
         grid.birth_cell((-2, 2))
         game.update()
-        # self.assertEquals(len(grid.cells), 1)
-        # self.assertEquals(list(grid.cells)[0], (-1, 1))
+        self.assertEquals(len(grid.cells), 1)
+        self.assertEquals(list(grid.cells)[0], (-1, 1))

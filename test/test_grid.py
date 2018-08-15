@@ -60,6 +60,24 @@ class TestGrid(unittest.TestCase):
         neighbors_count = self.grid.count_neighbors((0, 0))
         self.assertEquals(neighbors_count, 1)
 
+    def test__count_neighbors__should_return_zero_when_non_adjacent_cells_alive(self):
+        self.grid.cells = {
+            (0, 0), (1, 2)
+        }
+
+        neighbors_count = self.grid.count_neighbors((0, 0))
+        self.assertEquals(neighbors_count, 0)
+
+    def test__count_neighbors__should_return_four_when_chuckwagon_configuration(self):
+        self.grid.cells = {
+            (0, 0), (0, 2),
+            (1, 1),
+            (2, 0), (2, 2)
+        }
+
+        neighbors_count = self.grid.count_neighbors((1, 1))
+        self.assertEquals(neighbors_count, 4)
+
     def test__get_adjacent_empty_cells__should_return_list_of_empty_adjacent_cells(self):
         self.grid.cells = {(0, 0)}
 
