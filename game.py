@@ -34,8 +34,8 @@ class Game(object):
         new_cells = self._find_new_cells(self.grid)
         dead_cells = self._find_dying_cells(self.grid)
 
-        self._add_new_cells(self.grid, new_cells)
-        self._remove_dead_cells(self.grid, dead_cells)
+        self.grid.birth_cells(new_cells)
+        self.grid.kill_cells(dead_cells)
 
         return new_cells, dead_cells
 
@@ -82,12 +82,3 @@ class Game(object):
                 dying_cells.add(cell)
         return list(dying_cells)
 
-    @staticmethod
-    def _add_new_cells(grid, new_cells):
-        for new_cell in new_cells:
-            grid.birth_cell(new_cell)
-
-    @staticmethod
-    def _remove_dead_cells(grid, dead_cells):
-        for dead_cell in dead_cells:
-            grid.kill_cell(dead_cell)

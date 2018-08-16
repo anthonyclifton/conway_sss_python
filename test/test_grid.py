@@ -33,6 +33,14 @@ class TestGrid(unittest.TestCase):
         self.grid.birth_cells(cells_to_birth)
         self.assertEquals(self.grid.get_cells(), set(cells_to_birth))
 
+    def test__kill_cells__should_remove_cells(self):
+        cells_to_be_killed = [(0, 0), (1, 1)]
+        self.grid.birth_cells(cells_to_be_killed)
+
+        self.grid.kill_cells(cells_to_be_killed)
+
+        self.assertEquals(0, len(self.grid.get_cells()))
+
     def test__get_cells__should_return_current_cells(self):
         cells_to_birth = [(0, 0), (1, 1)]
         self.grid.birth_cells(cells_to_birth)
