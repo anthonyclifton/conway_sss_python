@@ -21,7 +21,7 @@ class TestGameConway(unittest.TestCase):
         # lonely cells die (alive, less than 2 neighbors)
         # happy cells live (alive, 2 or 3 neighbors)
         # crowded cells die (alive, more than 3 neighbors)
-        # new cells appear (dead, 3 neighbors or more)
+        # new cells appear (dead, exactly 3 neighbors)
 
         # The tests in this suite are in a classicist style
         # where we are manipulating both the Unit Under Test
@@ -32,21 +32,21 @@ class TestGameConway(unittest.TestCase):
     def test__update__should_kill_lonely_cells_with_zero_neighbors(self):
         self.grid.birth_cell((0, 0))
         self.game.update()
-        self.assertEquals(len(self.grid.cells), 0)
+        self.assertEquals(len(self.grid.get_cells()), 0)
 
     def test__update__should_kill_lonely_cells_with_one_neighbor(self):
         self.grid.birth_cell((0, 0))
         self.grid.birth_cell((0, 1))
         self.game.update()
-        self.assertEquals(len(self.grid.cells), 0)
+        self.assertEquals(len(self.grid.get_cells()), 0)
 
     def test__update__should_not_kill_happy_cells_with_two_neighbors(self):
         self.grid.birth_cell((0, 0))
         self.grid.birth_cell((1, 1))
         self.grid.birth_cell((2, 2))
         self.game.update()
-        self.assertEquals(len(self.grid.cells), 1)
-        self.assertEquals(list(self.grid.cells)[0], (1, 1))
+        self.assertEquals(len(self.grid.get_cells()), 1)
+        assert (1, 1) in self.grid.get_cells()
 
     def test__update__should_not_kill_happy_cells_with_three_neighbors(self):
         self.grid.birth_cell((0, 0))
@@ -54,12 +54,11 @@ class TestGameConway(unittest.TestCase):
         self.grid.birth_cell((-1, 1))
         self.grid.birth_cell((-2, 2))
 
-        expected_cells = {
-            (0, 1),
-            (-1, 1), (-1, 2)
-        }
+        expected_cells = {(0, 1), (-1, 1), (-1, 2)}
+
         self.game.update()
-        self.assertEquals(self.grid.cells, expected_cells)
+
+        self.assertEquals(expected_cells, self.grid.get_cells())
 
     def test__update__should_kill_crowded_cells_with_more_than_three_neighbors(self):
         self.grid.birth_cell((0, 0))
@@ -68,14 +67,11 @@ class TestGameConway(unittest.TestCase):
         self.grid.birth_cell((-2, 0))
         self.grid.birth_cell((-2, 2))
 
-        expected_cells = {
-            (0, 1),
-            (-1, 0), (-1, 2),
-            (-2, 1)
-        }
+        expected_cells = {(0, 1), (-1, 0), (-1, 2), (-2, 1)}
 
         self.game.update()
-        self.assertEquals(self.grid.cells, expected_cells)
+
+        self.assertEquals(expected_cells, self.grid.get_cells())
 
     def test__update__should_birth_cells_when_they_would_have_three_neighbors(self):
         self.grid.birth_cell((0, 0))
@@ -83,27 +79,17 @@ class TestGameConway(unittest.TestCase):
         self.grid.birth_cell((-2, 2))
         self.game.update()
         self.assertEquals(len(self.grid.cells), 1)
-        self.assertEquals(list(self.grid.cells)[0], (-1, 1))
-
-    def test__update__should_birth_cells_when_they_would_have_more_than_three_neighbors(self):
-        self.grid.birth_cell((0, 0))
-        self.grid.birth_cell((0, 2))
-        self.grid.birth_cell((-2, 0))
-        self.grid.birth_cell((-2, 2))
-        self.game.update()
-        self.assertEquals(len(self.grid.cells), 1)
-        self.assertEquals(list(self.grid.cells)[0], (-1, 1))
+        assert (-1, 1) in self.grid.get_cells()
 
     def test__update__should_handle_simple_oscillator(self):
         self.grid.birth_cell((0, 0))
         self.grid.birth_cell((0, 1))
         self.grid.birth_cell((0, 2))
 
-        expected_cells = {
-            (1, 1),
-            (0, 1),
-            (-1, 1)
-        }
-
+        expected_cells_first_update = {(1, 1), (0, 1), (-1, 1)}
         self.game.update()
-        self.assertEquals(self.grid.cells, expected_cells)
+        self.assertEquals(expected_cells_first_update, self.grid.get_cells())
+
+        expected_cells_second_update = {(0, 0), (0, 1), (0, 2)}
+        self.game.update()
+        self.assertEquals(expected_cells_second_update, self.grid.get_cells())

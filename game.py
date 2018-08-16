@@ -12,7 +12,7 @@ class Game(object):
         self.start_timestamp = time.time()
         self.running = False
 
-    def start(self, cell_filename=None, sleep_time=0.01):
+    def start(self, cell_filename=None, sleep_time=0.1):
         self._setup()
 
         if cell_filename:
@@ -54,7 +54,7 @@ class Game(object):
         for cell in self.grid.cells:
             empty_neighbors = self.grid.get_adjacent_empty_cells(cell)
             birthing_cells = [possible for possible in empty_neighbors
-                              if self.grid.count_neighbors(possible) >= 3]
+                              if self.grid.count_neighbors(possible) == 3]
             new_cells.update(birthing_cells)
         return list(new_cells)
 
