@@ -8,22 +8,21 @@ class Game(object):
         self.file_service = file_service
         self.generation_count = 0
         self.start_timestamp = time.time()
-        self.running = False
 
     def start(self, filename=None, sleep_time=0.1):
         self._setup(self.screen_service)
 
         self._load_file_into_grid(self.file_service, self.grid, filename)
 
-        self.running = True
-        while self.running:
+        running = True
+        while running:
             time.sleep(sleep_time)
             new_cells, dead_cells = self.update()
             self.display(new_cells, dead_cells)
 
             if not self.screen_service.check_inputs():
                 self.screen_service.cleanup()
-                self.running = False
+                running = False
 
     def update(self):
         self.generation_count = self._update_status(self.screen_service,
