@@ -26,11 +26,10 @@ class Game(object):
                 self.running = False
 
     def update(self):
-        self.generation_count = self.generation_count + 1
-        generations_per_second = int(self.generation_count / (time.time() - self.start_timestamp))
-        self.screen_service.draw_status(self.generation_count,
-                                        generations_per_second,
-                                        len(self.grid.cells))
+        self.generation_count = self._update_status(self.screen_service,
+                                                    self.grid,
+                                                    self.generation_count,
+                                                    self.start_timestamp)
 
         new_cells = self._find_new_cells(self.grid)
         dead_cells = self._find_dying_cells(self.grid)
@@ -43,6 +42,15 @@ class Game(object):
     def display(self, new_cells, dead_cells):
         self.screen_service.clear_cells(dead_cells)
         self.screen_service.draw_cells(new_cells)
+
+    @staticmethod
+    def _update_status(screen_service, grid, generation_count, start_timestamp):
+        generation_count = generation_count + 1
+        generations_per_second = int(generation_count / (time.time() - start_timestamp))
+        screen_service.draw_status(generation_count,
+                                   generations_per_second,
+                                   len(grid.get_cells()))
+        return generation_count
 
     @staticmethod
     def _setup(screen_service):
