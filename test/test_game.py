@@ -1,4 +1,3 @@
-import time
 import unittest
 
 from mock import MagicMock, call, patch
