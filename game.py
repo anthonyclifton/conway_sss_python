@@ -13,11 +13,8 @@ class Game(object):
         self.start_timestamp = time.time()
         self.running = False
 
-    def setup(self):
-        self.screen_service.draw_ui()
-
     def start(self, sleep_time=0.5):
-        self.setup()
+        self._setup()
         self.running = True
         while self.running:
             time.sleep(sleep_time)
@@ -44,6 +41,9 @@ class Game(object):
     def display(self):
         self.screen_service.clear_cells(self.dead_cells)
         self.screen_service.draw_cells(list(self.grid.cells))
+
+    def _setup(self):
+        self.screen_service.draw_ui()
 
     def _find_new_cells(self):
         new_cells = set()

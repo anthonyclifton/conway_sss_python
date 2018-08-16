@@ -40,9 +40,15 @@ class TestGame(unittest.TestCase):
         self.game.update()
         self.mock_screen_service.draw_status.assert_called_once()
 
-    def test__setup__should_setup_border_and_gui(self):
-        self.game.setup()
-        self.mock_screen_service.draw_ui.assert_called_once()
+    @patch('game.time.sleep')
+    def test__start__should_setup_border_and_gui(self, mock_sleep):
+        fake_screen_service = FakeScreenService(1)
+        mock_file_service = MagicMock()
+        game = Game(fake_screen_service, mock_file_service, Grid())
+
+        game.start()
+
+        self.assertEquals(fake_screen_service.drew_ui, True)
 
     @patch('game.time.sleep')
     def test__start__should_start_game_loop(self, mock_sleep):
@@ -81,6 +87,8 @@ class FakeScreenService(object):
         self.cleanup_calls = 0
         self.allowed_loops = allowed_loops
 
+        self.drew_ui = False
+
     def check_inputs(self):
         self.check_inputs_calls = self.check_inputs_calls + 1
         if self.draw_cells_calls > self.allowed_loops:
@@ -95,7 +103,7 @@ class FakeScreenService(object):
         return 10, 10
 
     def draw_ui(self):
-        pass
+        self.drew_ui = True
 
     def draw_status(self, generation_count, generations_per_second, living_cells):
         self.draw_status_calls = self.draw_status_calls + 1
