@@ -10,12 +10,10 @@ class Game(object):
         self.start_timestamp = time.time()
         self.running = False
 
-    def start(self, cell_filename=None, sleep_time=0.1):
+    def start(self, filename=None, sleep_time=0.1):
         self._setup(self.screen_service)
 
-        if cell_filename:
-            loaded_cells = self.file_service.read_cells(cell_filename)
-            self.grid.birth_cells(loaded_cells)
+        self._load_file_into_grid(self.file_service, self.grid, filename)
 
         self.running = True
         while self.running:
@@ -49,6 +47,12 @@ class Game(object):
     @staticmethod
     def _setup(screen_service):
         screen_service.draw_ui()
+
+    @staticmethod
+    def _load_file_into_grid(file_service, grid, filename):
+        if filename:
+            loaded_cells = file_service.read_cells(filename)
+            grid.birth_cells(loaded_cells)
 
     @staticmethod
     def _find_new_cells(grid):
