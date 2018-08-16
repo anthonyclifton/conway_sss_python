@@ -25,8 +25,7 @@ class TestGame(unittest.TestCase):
 
     def test__display__should_draw_cells_on_screen(self):
         expected_cells = [(0, 0), (1, 1), (2, 2)]
-        self.game.grid.cells.update(set(expected_cells))
-        self.game.display([])
+        self.game.display(expected_cells, [])
         calls = [call(expected_cells)]
         self.mock_screen_service.draw_cells.assert_has_calls(calls)
 

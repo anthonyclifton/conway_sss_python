@@ -19,7 +19,7 @@ class Game(object):
         while self.running:
             time.sleep(sleep_time)
             new_cells, dead_cells = self.update()
-            self.display(dead_cells)
+            self.display(new_cells, dead_cells)
 
             if not self.screen_service.check_inputs():
                 self.screen_service.cleanup()
@@ -40,9 +40,9 @@ class Game(object):
 
         return new_cells, dead_cells
 
-    def display(self, dead_cells):
+    def display(self, new_cells, dead_cells):
         self.screen_service.clear_cells(dead_cells)
-        self.screen_service.draw_cells(list(self.grid.get_cells()))
+        self.screen_service.draw_cells(new_cells)
 
     @staticmethod
     def _setup(screen_service):
