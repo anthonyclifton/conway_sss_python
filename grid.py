@@ -19,8 +19,18 @@ class Grid(object):
     def get_cells(self):
         return self.cells
 
+    # def count_neighbors(self, coordinates):
+    #     return len([cell for cell in self.cells if self._are_neighbors(coordinates, cell)])
+
     def count_neighbors(self, coordinates):
-        return len([cell for cell in self.cells if self._are_neighbors(coordinates, cell)])
+        cell_y, cell_x = coordinates
+        possible_neighbors = [(y, x)
+                              for y in range(cell_y - 1, cell_y + 2, 1)
+                              for x in range(cell_x - 1, cell_x + 2, 1)]
+
+        return len([cell for cell in possible_neighbors
+                    if cell != coordinates
+                    and self._is_alive(cell)])
 
     def get_adjacent_empty_cells(self, coordinates):
         cell_y, cell_x = coordinates
