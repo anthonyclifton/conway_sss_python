@@ -12,8 +12,13 @@ class Game(object):
         self.start_timestamp = time.time()
         self.running = False
 
-    def start(self, sleep_time=0.5):
+    def start(self, cell_filename=None, sleep_time=0.01):
         self._setup()
+
+        if cell_filename:
+            loaded_cells = self.file_service.read_cells(cell_filename)
+            self.grid.birth_cells(loaded_cells)
+
         self.running = True
         while self.running:
             time.sleep(sleep_time)
@@ -54,13 +59,13 @@ class Game(object):
         return list(new_cells)
 
     def _find_dying_cells(self):
-        dying_cells = []
+        dying_cells = set()
         for cell in self.grid.cells:
             neighbors = self.grid.count_neighbors(cell)
 
             if neighbors < 2 or neighbors > 3:
-                dying_cells.append(cell)
-        return dying_cells
+                dying_cells.add(cell)
+        return list(dying_cells)
 
     def _add_new_cells(self):
         for new_cell in self.new_cells:

@@ -1,3 +1,5 @@
+CELL_FILE = './patterns/gosper_glider_gun.csv'
+
 ALIVE_CELL_CHARACTER = 'O'
 EMPTY_CELL_CHARACTER = ' '
 

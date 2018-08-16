@@ -1,5 +1,6 @@
 import curses
 
+from constants import CELL_FILE
 from file_service import FileService
 from game import Game
 from grid import Grid
@@ -11,5 +12,5 @@ grid = Grid()
 game = Game(screen_service, file_service, grid)
 
 if __name__ == '__main__':
-    game.start()
+    game.start(CELL_FILE)
 

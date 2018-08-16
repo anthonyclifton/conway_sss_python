@@ -71,10 +71,39 @@ class TestGame(unittest.TestCase):
         game = Game(fake_screen_service, mock_file_service, Grid())
 
         sleep_time = 0.123
-        game.start(sleep_time)
+        game.start(None, sleep_time)
 
         calls = [call(sleep_time), call(sleep_time), call(sleep_time)]
         mock_sleep.assert_has_calls(calls)
+
+    @patch('game.time.sleep')
+    def test__start__should_load_cell_file_when_provided(self, mock_sleep):
+        expected_filename = 'test.csv'
+        expected_cells = [(0, 0), (0, 1), (0, 2)]
+
+        fake_screen_service = FakeScreenService(1)
+        fake_file_service = FakeFileService(expected_filename, expected_cells)
+        grid = Grid()
+        game = Game(fake_screen_service, fake_file_service, grid)
+
+        game.start(expected_filename)
+
+        expected_cells_after_update = [(1, 1), (0, 1), (-1, 1)]
+
+        self.assertEqual(set(expected_cells_after_update), grid.get_cells())
+
+
+class FakeFileService(object):
+    def __init__(self, expected_filename, expected_cells):
+        self.expected_filename = expected_filename
+        self.expected_cells = expected_cells
+        self.actual_filename = None
+
+    def read_cells(self, filename):
+        self.actual_filename = filename
+        if self.actual_filename == self.expected_filename:
+            return self.expected_cells
+        return []
 
 
 class FakeScreenService(object):
@@ -90,7 +119,7 @@ class FakeScreenService(object):
 
     def check_inputs(self):
         self.check_inputs_calls = self.check_inputs_calls + 1
-        if self.draw_cells_calls > self.allowed_loops:
+        if self.draw_cells_calls == self.allowed_loops:
             return 0
         return 1
 
