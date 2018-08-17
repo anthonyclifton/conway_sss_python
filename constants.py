@@ -1,7 +1,7 @@
-CELL_FILE = './patterns/simple_oscillator.lex'
+CELL_FILE = './patterns/pulsar.lex'
 SLEEP_PER_UPDATE = 0
 
-CENTER_ORIGIN = False
+CENTER_ORIGIN = True
 
 ALIVE_CELL_CHARACTER = 'O'
 EMPTY_CELL_CHARACTER = ' '
