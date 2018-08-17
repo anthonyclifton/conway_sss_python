@@ -18,3 +18,14 @@ class FileService(object):
                     if cell == ALIVE_CELL_CHARACTER:
                         alive_cells.append((y, x))
         return alive_cells
+
+    @staticmethod
+    def read_cells_from_lexicon_format(filename):
+        alive_cells = []
+        cell_file = open(filename, 'r')
+
+        for y, row in enumerate(cell_file):
+            for x, cell in enumerate(list(row)):
+                if cell == ALIVE_CELL_CHARACTER:
+                    alive_cells.append((y, x))
+        return alive_cells
