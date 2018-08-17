@@ -1,4 +1,4 @@
-CELL_FILE = './patterns/super_gosper_glider_gun.csv'
+CELL_FILE = './patterns/simple_oscillator.lex'
 SLEEP_PER_UPDATE = 0
 
 CENTER_ORIGIN = False
