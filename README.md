@@ -74,6 +74,9 @@ show other styles of testing, more sophisticated approaches to software design,
 and hints about achieving good performance as the number of live cells increases
 on your grid.
 
+Anthony C - https://github.com/anthonyclifton/conway_sss_python/tree/implement-conway
+Michael P - https://github.com/anthonyclifton/conway_sss_python/tree/michael
+
 Rules
 =====
 
