@@ -21,6 +21,7 @@ class FileService(object):
 
     @staticmethod
     def read_cells_from_lexicon_format(filename):
+        # read from lexicon files from: http://www.conwaylife.com/ref/lexicon/lex.htm
         alive_cells = []
         cell_file = open(filename, 'r')
 
