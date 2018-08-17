@@ -68,6 +68,12 @@ load one of these with ```read_cells()``` method in ```file_service.py```
 
 http://www.conwaylife.com/wiki/Gosper_glider_gun
 
+You can find hundreds of patterns to run on various web sites.  This one has
+plain text patterns that can be read by ```file_service.py``` if you save them in
+the ```patterns``` folder with a .lex extension.
+
+http://www.conwaylife.com/ref/lexicon/lex.htm
+
 Example Implementations
 =======================
 
