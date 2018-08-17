@@ -7,15 +7,11 @@ class TestFileService(unittest.TestCase):
     def setUp(self):
         self.file_service = FileService()
 
-    def test__read_cells__should_return_list_of_cells_from_csv_file(self):
-        filename = '../patterns/test.csv'
+    def test__read_cells__should_return_list_of_cells(self):
+        filename = '../patterns/test.lex'
 
-        expected_cells = [
-            (0, 0), (0, 2),
-            (1, 1),
-            (2, 0), (2, 2)
-        ]
+        expected_cells = [(3, 4), (3, 6), (4, 5), (5, 4), (5, 6)]
 
         actual_cells = self.file_service.read_cells(filename)
 
-        self.assertEqual(actual_cells, expected_cells)
+        self.assertEqual(expected_cells, actual_cells)

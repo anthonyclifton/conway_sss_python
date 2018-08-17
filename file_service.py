@@ -1,5 +1,3 @@
-import csv
-
 from constants import ALIVE_CELL_CHARACTER
 
 
@@ -9,12 +7,12 @@ class FileService(object):
 
     @staticmethod
     def read_cells(filename):
+        # read from lexicon files from: http://www.conwaylife.com/ref/lexicon/lex.htm
         alive_cells = []
-        with open(filename, 'rb') as cell_file:
-            cell_file_reader = csv.reader(cell_file, delimiter=',', quotechar='|')
+        cell_file = open(filename, 'r')
 
-            for y, row in enumerate(cell_file_reader):
-                for x, cell in enumerate(row):
-                    if cell == ALIVE_CELL_CHARACTER:
-                        alive_cells.append((y, x))
+        for y, row in enumerate(cell_file):
+            for x, cell in enumerate(list(row)):
+                if cell == ALIVE_CELL_CHARACTER:
+                    alive_cells.append((y, x))
         return alive_cells
