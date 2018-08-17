@@ -3,7 +3,7 @@ from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, \
     GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, \
     LIVING_CELLS_LABEL, GENERATION_VALUE_POSITION, \
     GENERATIONS_PER_SECOND_VALUE_POSITION, LIVING_CELLS_VALUE_POSITION, \
-    UPPER_CASE_Q_KEY, LOWER_CASE_Q_KEY
+    UPPER_CASE_Q_KEY, LOWER_CASE_Q_KEY, CENTER_ORIGIN
 
 
 class ScreenService(object):
@@ -80,15 +80,27 @@ class ScreenService(object):
         self.screen.refresh()
 
     def draw_cells(self, cells):
+        offset_y = int(self.height / 2)
+        offset_x = int(self.width / 2)
+
         for cell in cells:
             y, x = cell
+            if CENTER_ORIGIN:
+                y = y + offset_y
+                x = x + offset_x
             if self.is_on_screen(x, y):
                 self.screen.addch(y, x, 'O')
         self.screen.refresh()
 
     def clear_cells(self, cells):
+        offset_y = int(self.height / 2)
+        offset_x = int(self.width / 2)
+
         for cell in cells:
             y, x = cell
+            if CENTER_ORIGIN:
+                y = y + offset_y
+                x = x + offset_x
             if self.is_on_screen(x, y):
                 self.screen.addch(y, x, ' ')
         self.screen.refresh()

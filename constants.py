@@ -1,5 +1,7 @@
-CELL_FILE = './patterns/gosper_glider_gun.csv'
+CELL_FILE = './patterns/super_gosper_glider_gun.csv'
 SLEEP_PER_UPDATE = 0
+
+CENTER_ORIGIN = False
 
 ALIVE_CELL_CHARACTER = 'O'
 EMPTY_CELL_CHARACTER = ' '

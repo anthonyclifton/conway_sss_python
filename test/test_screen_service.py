@@ -1,5 +1,5 @@
 import unittest
-from mock import MagicMock, call
+from mock import MagicMock, call, patch
 
 from constants import GENERATION_LABEL_POSITION, GENERATION_LABEL, GENERATIONS_PER_SECOND_LABEL_POSITION, \
     GENERATIONS_PER_SECOND_LABEL, LIVING_CELLS_LABEL_POSITION, LIVING_CELLS_LABEL, GENERATION_VALUE_POSITION, \
@@ -166,3 +166,45 @@ class TestScreenService(unittest.TestCase):
         self.assertEquals(self.mock_screen.nodelay.call_count, 2)
         self.assertEquals(self.mock_screen.erase.call_count, 1)
         self.assertEquals(self.mock_screen.refresh.call_count, 2)
+
+    @patch('screen_service.CENTER_ORIGIN')
+    def test__draw_cells__screen_center_is_origin_when_center_origin_true(self, mock_center_origin):
+        mock_center_origin.return_value = True
+        self.screen_service.height = 10
+        self.screen_service.width = 20
+
+        expected_center_y = int(self.screen_service.height / 2)
+        expected_center_x = int(self.screen_service.width / 2)
+
+        cells = [(1, 1), (2, 2), (3, 3)]
+
+        self.screen_service.draw_cells(cells)
+
+        expected_calls = [
+            call(1 + expected_center_y, 1 + expected_center_x, 'O'),
+            call(2 + expected_center_y, 2 + expected_center_x, 'O'),
+            call(3 + expected_center_y, 3 + expected_center_x, 'O')
+        ]
+
+        self.mock_screen.addch.assert_has_calls(expected_calls)
+
+    @patch('screen_service.CENTER_ORIGIN')
+    def test__clear_cells__screen_center_is_origin_when_center_origin_true(self, mock_center_origin):
+        mock_center_origin.return_value = True
+        self.screen_service.height = 10
+        self.screen_service.width = 20
+
+        expected_center_y = int(self.screen_service.height / 2)
+        expected_center_x = int(self.screen_service.width / 2)
+
+        cells = [(1, 1), (2, 2), (3, 3)]
+
+        self.screen_service.clear_cells(cells)
+
+        expected_calls = [
+            call(1 + expected_center_y, 1 + expected_center_x, ' '),
+            call(2 + expected_center_y, 2 + expected_center_x, ' '),
+            call(3 + expected_center_y, 3 + expected_center_x, ' ')
+        ]
+
+        self.mock_screen.addch.assert_has_calls(expected_calls)
