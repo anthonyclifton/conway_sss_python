@@ -29,20 +29,21 @@ class Game(object):
                 self.running = False
 
     def update(self):
-        self.generation_count = self.generation_count + 1
-        generations_per_second = int(self.generation_count / (time.time() - self.start_timestamp))
-        self.screen_service.draw_status(self.generation_count,
-                                        generations_per_second,
-                                        len(self.grid.cells))
-        if len(self.grid.cells) > 0:
-            cell_to_kill = list(self.grid.cells)[0]
-            self.grid.kill_cell(cell_to_kill)
-            self.dead_cells = [cell_to_kill]
-
-        screen_height, screen_width = self.screen_service.get_dimensions()
-        random_cell = (randint(0, screen_height),
-                       randint(0, screen_width))
-        self.grid.birth_cell(random_cell)
+        # self.generation_count = self.generation_count + 1
+        # generations_per_second = int(self.generation_count / (time.time() - self.start_timestamp))
+        # self.screen_service.draw_status(self.generation_count,
+        #                                 generations_per_second,
+        #                                 len(self.grid.cells))
+        # if len(self.grid.cells) > 0:
+        #     cell_to_kill = list(self.grid.cells)[0]
+        #     self.grid.kill_cell(cell_to_kill)
+        #     self.dead_cells = [cell_to_kill]
+        #
+        # screen_height, screen_width = self.screen_service.get_dimensions()
+        # random_cell = (randint(0, screen_height),
+        #                randint(0, screen_width))
+        # self.grid.birth_cell(random_cell)
+        pass
 
     def display(self):
         self.screen_service.clear_cells(self.dead_cells)
